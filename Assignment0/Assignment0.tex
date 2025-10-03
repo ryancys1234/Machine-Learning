@@ -1,0 +1,62 @@
+\documentclass[12pt]{article}
+\usepackage[left=.5in, right=.5in, top=.5in, bottom=.5in]{geometry}
+\usepackage[parfill]{parskip}
+\usepackage{amsmath, amsfonts, bm}
+\pagenumbering{gobble}
+\newcommand{\C}{\text{Cov}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\m}[1]{\mathbf{#1}}
+\newcommand{\R}{\mathbb{R}}
+
+\begin{document}
+
+\begin{center}
+{\Large 6.7900 - Assignment 0}
+\end{center}
+
+\textbf{1.1.1:} One such vector is $\frac{\m w}{||\m w||}$, where $\m w=(w_1,\dots,w_n)$, since $w_0+\sum_{i=1}^nw_ix_i=\m w\cdot[(x_1,\dots,x_n)-(0,\dots,0,\frac{w_0}{w_n})]=0$. The equation is then $\m y=\m v+t\m w$ for $\m y\in\R^n$ and $t\in\R$.
+
+\textbf{1.1.2:} We can plug the point into the function $f(\m x)=w_0+\sum_{i=1}^nw_ix_i$ and check the sign of the value.
+
+\textbf{1.1.3:} The point on the hyperplane closest to $\m v$ must satisfy $f(\m v+t\m w)=0$ for some $t$, yielding $t=\frac{-w_0-\m v^T\m w}{||\m w||^2}$. The distance is then $||\m v+t\m w-\m v||=||t\m w||=\frac{|w_0+\m v^T\m w|}{||\m w||}$.
+
+\textbf{1.2.1:} Since $\Sigma$ is symmetric, $\Sigma=U\Lambda U^T$ for some $U$ and $\Lambda$ such that $U=\begin{bmatrix}\m u_1 & \dots & \m u_n\end{bmatrix}$, $\Lambda=\text{diag}(\lambda_1,\dots,\lambda_n)$, and $\Sigma\m u_i=\lambda_i\m u_i$ for all $i$. Define $\m y=U\m x$ and note that $\det\frac{d\m x}{d\m y}=\det U^T=\det U=\pm 1$ since $U$ is an orthogonal matrix. Then,\begin{align*}
+    \int_{\R^n}\exp(-\frac{1}{2}\m x^T\Sigma^{-1}\m x)d\m x &=\int_{\R^n}\exp(-\frac{1}{2}\m y^T\Lambda^{-1}\m y)|\det\frac{d\m x}{d\m y}|d\m y\text{ by a change of variables}\\
+    &=\int_{\R^n}\exp(-\frac{1}{2}\sum_i\frac{y_i^2}{\lambda_i})d\m y=\int_{\R^n}\prod_i\exp(-\frac{y_i^2}{2\lambda_i})d\m y\\
+    &=\prod_i\int_{\R}\exp(-\frac{y_i^2}{2\lambda_i})dy_i=\prod_i\sqrt{2\pi\lambda_i}\text{ by the general Gaussian integral}\\
+    &=\sqrt{(2\pi)^n|\Sigma|}
+\end{align*}since the product of the eigenvalues is the determinant. Thus, $\int_{\R^n}p_X(\m x)d\m x=1$ and $\frac{1}{\sqrt{(2\pi)^n|\Sigma|}}$ is the normalizing constant. Note that $\Sigma$ is assumed to be positive definite such that $\lambda_i>0$ for all $i$ and $\bm\mu$ can be assumed to be 0 since it is a constant vector.
+
+\textbf{1.2.2:} By a change of variables, $p_Y(\m y)=p_X(\frac{1}{2}\m y)\frac{dX}{dY}=\frac{1}{\sqrt{(2\pi)^n|\Sigma|}}\exp[-2(\frac{1}{2}\m y-\bm{\mu})^T\Sigma^{-1}(\frac{1}{2}\m y-\bm\mu)]$ where $\C(Y)=4\Sigma$.
+
+\textbf{1.2.3:} The distribution has unit variance for every variable and hence is isotropic. Moreover, the variables are independent of each other since zero covariance implies independence for jointly normal variables. This can be shown by factorizing the joint PDF into a product of the marginal PDFs.
+
+\textbf{1.2.4:} The distribution has variance 10 along the direction of $X_1$ and variance 1 along the direction of $X_2$. In addition, $X_1$ and $X_2$ are independent and the joint PDF can be similarly factorized into a product. The contours are ellipses with the major axes oriented along the direction of $X_1$.
+
+\textbf{1.2.5:} The distribution has variance 10 along the directions of $X_1$ and $X_2$. In addition, $X_1$ and $X_2$ have negative covariance, indicating an inverse relationship. The contours are thin ellipses with the major axes oriented along the line $X_2=-X_1$.
+
+\textbf{1.2.6:} No, since it is not positive definite. This can be discerned by obtaining the eigenvalues 12 and $-8$ or noticing that $\m x^T\begin{bmatrix} 2 & 10 \\ 10 & 2 \end{bmatrix}\m x<0$ for some $\m x\in\R^2$.
+
+\textbf{1.2.7:} This can be done by calculating $\frac{p_{X_1,X_2}(x_1,3)}{p_{X_1}(x_1)}$ or by using the conditional identities $\E(X_1|X_2=3)=\mu_1+\Sigma_{1,2}\Sigma_{2,2}^{-1}(3-\mu_2)$ and $\text{Var}(X_1|X_2=3)=\Sigma_{1,1}-\Sigma_{1,2}\Sigma_{2,2}^{-1}\Sigma_{2,1}$, both of which give $p_{X_1|X_2}(x_1|3)=p_{X_1}(x_1)=\frac{1}{\sqrt{20\pi}}\exp[-\frac{1}{20}(x-1)^2]$. Note that $X_1$ and $X_2$ are independent since they are jointly normal and $\C(X_1,X_2)=0$, as noted previously.
+
+\textbf{1.3.1:} $\C(Ax,Bx)=\E[(Ax-A\E[x])(Bx-B\E[x])^T]=\E[A(x-\E[x])(x-\E[x]^T)B^T]=A\E[(x-\E[x])(x-\E[x]^T)]B^T=A\C(x)B^T$ by the linearity of expectation.
+
+\textbf{1.3.2:} Denote $D$ and $ND$ as having and not having the disease respectively. Using Bayes' theorem, $p(D|+)=\frac{p(+|D)p(D)}{p(+)}=\frac{p(+|D)p(D)}{p(+|D)p(D)+p(+|ND)p(ND)}=\frac{(0.97)(0.00005)}{(0.97)(0.00005)+(0.03)(0.99995)}=0.1614\%$.
+
+\textbf{1.3.3:} Plot C represents $p(X)$ since there are two peaks at $\mu_0$ and $\mu_1$, and $P(Z=0)=0.8\implies$ the density at $\mu_0$ is greater.
+
+\textbf{1.3.4:} The DAG for this situation is $A\leftarrow T\to B$, showing that $A$ and $B$ are independent when given $T$ and dependent otherwise.
+
+\textbf{1.4.1:} We have $\frac{\partial f}{\partial x}=2x-y+1$, $\frac{\partial f}{\partial y}=4y-x-4$, $\frac{\partial^2 f}{\partial x^2}=2$, $\frac{\partial^2 f}{\partial y^2}=4$, and $\frac{\partial^2 f}{\partial x\partial y}=\frac{\partial^2 f}{\partial y\partial x}=-1$. Setting the first two to 0 yields the critical point of $(0,1)$, which is a local minimum by the second partial derivative test and hence a global minimum. The function's value at this point is -2.
+
+\textbf{1.4.2:} The Hessian $\begin{bmatrix} 2 & -1 \\ -1 & 8 \end{bmatrix}$ has eigenvalues $3\pm\sqrt{2}>0$, showing that it is PSD and hence convex over $\R^2$.
+
+\textbf{1.5.1:} $\frac{\partial E}{\partial w_j}=\Sigma_i[\sigma(\m w^T\m x^{(i)})-y^{(i)}]\sigma(\m w^T\m x^{(i)})[1-\sigma(\m w^T\m x^{(i)})]x_j^{(i)}+\beta w_j$ by the chain rule and since $\sigma'(x)=\sigma(x)[1-\sigma(x)]$.
+
+\textbf{1.5.2:} The update is $w_j\leftarrow w_j-\alpha\frac{\partial E}{\partial w_j}=(1-\beta)w_j-\alpha[\sigma(\m w^T\m x)-y]\sigma(\m w^T\m x)[1-\sigma(\m w^T\m x)]x_j$.
+
+\textbf{1.5.3:} This is not true since using only one data point in SGD introduces high variance in the update step such that individual steps might increase the objective despite decreasing it on average.
+
+\textbf{1.5.4:} This is true since SGD is computationally more efficient than full gradient descent and can converge faster, among other benefits.
+
+\end{document}
